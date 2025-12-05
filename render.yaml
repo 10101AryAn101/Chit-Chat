@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: chit-chat-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_ORIGIN
+        value: https://chit-chat-frontend-dexa.onrender.com
+
+  - type: web
+    name: chit-chat-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://chit-chat-t9cw.onrender.com/api
+      - key: VITE_SOCKET_URL
+        value: https://chit-chat-t9cw.onrender.com
