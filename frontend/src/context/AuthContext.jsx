@@ -24,9 +24,13 @@ export function AuthProvider({ children }) {
         const token = localStorage.getItem('token');
         if (token) {
           const { data } = await axios.get('/auth/me');
-          setUser(data.user);
+          // Normalize user object to have both id and _id for compatibility
+          const user = data.user;
+          if (user._id && !user.id) user.id = user._id;
+          setUser(user);
         }
-      } catch {
+      } catch (err) {
+        console.error('Auth check failed:', err);
         localStorage.removeItem('token');
       }
       setLoading(false);
