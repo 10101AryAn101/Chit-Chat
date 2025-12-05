@@ -14,12 +14,18 @@ export function initSocket(server) {
       await User.findByIdAndUpdate(userId, { onlineStatus: true });
       io.emit('userOnline', { userId });
       
-      const onlineUsers = await User.find({ onlineStatus: true }).select('_id username avatar').limit(100).lean();
+      const onlineUsers = await User.find({ onlineStatus: true })
+      .select('_id username avatar')
+      .limit(100)
+      .lean();
       io.emit('onlineUsersUpdate', onlineUsers);
     }
 
     socket.on('getOnlineUsers', async () => {
-      const onlineUsers = await User.find({ onlineStatus: true }).select('_id username avatar').limit(100).lean();
+      const onlineUsers = await User.find({ onlineStatus: true })
+      .select('_id username avatar')
+      .limit(100)
+      .lean();
       socket.emit('onlineUsersUpdate', onlineUsers);
     });
 
