@@ -2,6 +2,8 @@
 
 A real-time chat application built with the MERN stack, featuring channel-based messaging, user authentication, and a beautiful responsive UI.
 
+# View Live App: https://chit-chat-frontend-dexa.onrender.com/chat
+
 ## Tech Stack
 
 ### Backend
